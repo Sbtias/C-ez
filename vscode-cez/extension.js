@@ -1,34 +1,52 @@
 const vscode = require('vscode');
 const path = require('path');
-const fs = require('fs');
 const { run } = require('./runtime');
 
 function activate(context) {
   const output = vscode.window.createOutputChannel('C ez');
-  context.subscriptions.push(output);
+  const diagnostics = vscode.languages.createDiagnosticCollection('cez');
+  context.subscriptions.push(output, diagnostics);
 
-  context.subscriptions.push(vscode.commands.registerCommand('cez.runFile', async () => {
+  async function runActiveFile() {
     const editor = vscode.window.activeTextEditor;
     if (!editor) return vscode.window.showWarningMessage('Abre un archivo .cez primero.');
-    if (path.extname(editor.document.fileName).toLowerCase() !== '.cez') {
+    const document = editor.document;
+    if (path.extname(document.fileName).toLowerCase() !== '.cez') {
       return vscode.window.showWarningMessage('El archivo activo debe terminar en .cez.');
     }
-    await editor.document.save();
+    await document.save();
     output.clear();
-    output.appendLine('C ez • Ejecutando ' + path.basename(editor.document.fileName));
+    diagnostics.delete(document.uri);
+    output.appendLine('C ez • Ejecutando ' + path.basename(document.fileName));
     try {
-      const result = run(editor.document.getText(), editor.document.fileName);
+      const result = run(document.getText(), document.fileName);
       if (result.output) output.appendLine(result.output);
       else output.appendLine('(sin salida)');
       output.appendLine('');
-      output.appendLine('Ejecución terminada.');
+      output.appendLine('✓ Ejecución terminada sin errores.');
       output.show(true);
+      vscode.window.setStatusBarMessage('C ez: ejecución terminada', 3000);
     } catch (error) {
-      output.appendLine('ERROR: ' + error.message);
+      const message = String(error.message || error);
+      output.appendLine('✖ ERROR DE C EZ');
+      output.appendLine(message);
+      output.appendLine('');
+      output.appendLine('Consejo: revisa la sintaxis y los nombres de variables de la línea indicada.');
+      const match = message.match(/línea\s+(\d+)/i);
+      if (match) {
+        const line = Math.max(0, Number(match[1]) - 1);
+        const range = new vscode.Range(line, 0, line, Math.max(1, document.lineAt(line).text.length));
+        diagnostics.set(document.uri, [new vscode.Diagnostic(range, message.split('\n')[0], vscode.DiagnosticSeverity.Error)]);
+        const position = new vscode.Position(line, 0);
+        editor.selection = new vscode.Selection(position, position);
+        editor.revealRange(range, vscode.TextEditorRevealType.InCenter);
+      }
       output.show(true);
-      vscode.window.showErrorMessage('C ez: ' + error.message);
+      vscode.window.showErrorMessage('C ez: ' + message.split('\n')[0]);
     }
-  }));
+  }
+
+  context.subscriptions.push(vscode.commands.registerCommand('cez.runFile', runActiveFile));
 
   context.subscriptions.push(vscode.commands.registerCommand('cez.newFile', async () => {
     const uri = await vscode.window.showSaveDialog({
@@ -56,7 +74,13 @@ function activate(context) {
   }));
 
   context.subscriptions.push(vscode.commands.registerCommand('cez.showLanguageInfo', () => {
-    vscode.window.showInformationMessage('C ez: variables, funciones, clases, condiciones, bucles y colecciones. No requiere Python.');
+    vscode.window.showInformationMessage('C ez incluye variables, funciones, clases, condiciones, bucles y ejecución integrada sin Python.');
+  }));
+
+  context.subscriptions.push(vscode.commands.registerCommand('cez.clearErrors', () => {
+    diagnostics.clear();
+    output.clear();
+    vscode.window.showInformationMessage('Panel de errores de C ez limpiado.');
   }));
 }
 function deactivate() {}
