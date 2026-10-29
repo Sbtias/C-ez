@@ -1,8 +1,8 @@
 {
   "name": "cez-language",
   "displayName": "C ez Language Support",
-  "description": "Resaltado, snippets y ejecución para archivos .cez.",
-  "version": "0.1.0",
+  "description": "Lenguaje C ez con intérprete integrado, resaltado, snippets y ejecución sin dependencias externas.",
+  "version": "0.2.0",
   "publisher": "sbtias",
   "engines": {
     "vscode": "^1.80.0"
@@ -43,6 +43,10 @@
       {
         "command": "cez.newFile",
         "title": "C ez: Crear archivo .cez"
+      },
+      {
+        "command": "cez.showLanguageInfo",
+        "title": "C ez: Ver funciones del lenguaje"
       }
     ],
     "keybindings": [
@@ -58,16 +62,17 @@
         "language": "cez",
         "path": "./snippets/cez.json"
       }
-    ],
-    "configuration": {
-      "title": "C ez",
-      "properties": {
-        "cez.pythonPath": {
-          "type": "string",
-          "default": "py -3",
-          "description": "Comando Python para ejecutar C ez en Windows; usa python3 en macOS/Linux."
-        }
-      }
-    }
+    ]
+  },
+  "files": [
+    "extension.js",
+    "runtime.js",
+    "language-configuration.json",
+    "syntaxes/**",
+    "snippets/**",
+    "README.md"
+  ],
+  "scripts": {
+    "vscode:prepublish": "node --check extension.js && node --check runtime.js"
   }
 }
