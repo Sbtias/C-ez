@@ -121,10 +121,10 @@ function activate(context) {
         }
 
         const consoleMethods = [
-          ['escribir', 'Escribe texto o valores en la consola', 'consola.escribir(\u0024{1:valor})'],
-          ['error', 'Escribe un mensaje de error', 'consola.error(\u0024{1:mensaje})'],
-          ['advertir', 'Escribe una advertencia', 'consola.advertir(\u0024{1:mensaje})'],
-          ['limpiar', 'Limpia la salida de la ejecución', 'consola.limpiar()'],
+          ['escribir', 'Escribe texto o valores en la consola', 'escribir(\u0024{1:valor})'],
+          ['error', 'Escribe un mensaje de error', 'error(\u0024{1:mensaje})'],
+          ['advertir', 'Escribe una advertencia', 'advertir(\u0024{1:mensaje})'],
+          ['limpiar', 'Limpia la salida de la ejecución', 'limpiar()'],
           ['/importar', 'Importa otro archivo .cez relativo al archivo actual', '/importar "\u0024{1:utilidades.cez}"']
         ];
         for (const [label, description, snippet] of consoleMethods) {
