@@ -1,57 +1,68 @@
 # C ez
 
-**C ez** es un lenguaje de programación en español, de sintaxis sencilla y con orientación a objetos. Los programas usan la extensión `.cez`.
+**C ez** is a lightweight, object-oriented programming language with a C#-inspired style. Source files use the .cez extension. It keeps indentation-based blocks while adding familiar ideas such as using directives, typed variable declarations, classes, and Console.WriteLine().
 
-## Extensión autónoma para Visual Studio Code
+## Visual Studio Code extension
 
-La carpeta `vscode-cez` contiene la extensión con intérprete JavaScript integrado. **No necesita instalar Python ni descargar un runtime por separado.**
+The vscode-cez folder contains the language extension and an integrated JavaScript runtime. You do not need Python or a separate runtime to use the VS Code extension.
 
-1. Abre la pestaña **Actions** del repositorio: https://github.com/Sbtias/C-ez/actions
-2. Entra en la ejecución más reciente de **Build C ez VS Code extension**.
-3. Descarga el artefacto `cez-language-vsix`.
-4. En VS Code, abre Extensiones, pulsa `...` y selecciona **Instalar desde VSIX...**.
-5. Abre o crea un archivo `.cez` y pulsa **Ctrl+F5** (Windows/Linux) o **Cmd+F5** (macOS).
+1. Open the repository's Actions tab: https://github.com/Sbtias/C-ez/actions
+2. Open the latest Build C ez VS Code extension run.
+3. Download the cez-language-vsix artifact.
+4. In VS Code, open Extensions, select ..., then choose Install from VSIX...
+5. Open a .cez file and press Ctrl+F5 (Windows/Linux) or Cmd+F5 (macOS).
 
-El build se ejecuta automáticamente al cambiar archivos de la extensión. El paquete VSIX contiene el intérprete y el soporte del lenguaje.
-
-## Ejemplo
+## Quick start
 
 ```cez
-clase Persona:
-    funcion iniciar(nombre):
-        yo.nombre = nombre
+using System;
+using Text;
+using Random;
 
-    funcion saludar():
-        mostrar("Hola, " + yo.nombre)
+public class Player:
+    public function constructor(name):
+        this.name = name
 
-persona = Persona("mundo")
-persona.saludar()
+    public function Greet():
+        Console.WriteLine("Hello, " + Text.ToUpper(this.name))
 
-para numero en rango(1, 4):
-    mostrar(numero)
+function main():
+    Console.WriteLine("Welcome to C ez!")
+    Console.WriteLine("Random number: " + Random.Next(1, 101))
+
+    player = new Player("Alex")
+    player.Greet()
 ```
 
-Salida:
+C ez uses indentation for blocks, so a colon starts a class, function, or control-flow block. Semicolons are optional. It is not a full C# compiler, and braces-based C# syntax is not supported.
 
-```text
-Hola, mundo
-1
-2
-3
-```
+## Standard library
 
-## Funciones actuales
+Library modules are built in. Add a using line at the top of a file, then call the module's methods.
 
-- Variables y expresiones.
-- Funciones con `funcion` y `retornar`.
-- Clases, constructor `iniciar` y `yo` para referirse al objeto.
-- Condiciones: `si`, `sino_si`, `sino`.
-- Bucles: `mientras`, `para ... en ...`, `romper`, `continuar`.
-- Colecciones JavaScript: listas con `[]` y objetos con `{}`.
-- Valores: `verdadero`, `falso`, `nada`.
-- Operadores: `y`, `o`, `no`, `es`, `no es`.
-- Utilidades: `mostrar()`, `longitud()`, `rango()`, `texto()`, `numero()`, `tipo()`.
+| Import | Example | Purpose |
+| --- | --- | --- |
+| using System; | Console.WriteLine("Hello") | Console output and runtime information |
+| using Random; | Random.Next(1, 10) | Random numbers and random selection |
+| using Text; | Text.ToUpper("hello") | Text conversion, trimming, searching, splitting |
+| using Dates; | Dates.Now() | Date/time values and timestamps |
+| using Collections; | Collections.Add(items, 5) | Common array/list operations |
+| using Json; | Json.Stringify(data) | JSON parsing and serialization |
 
-## Estado
+These modules are available in the integrated runtime. using documents which modules a program depends on; it does not download packages from the internet.
 
-C ez sigue siendo un lenguaje en desarrollo. La extensión ejecuta el subconjunto del lenguaje implementado por su intérprete integrado; no es todavía un compilador nativo ni promete compatibilidad con todas las bibliotecas de JavaScript o Python.
+## Language features
+
+- Variables and expressions, including typed declarations such as int score = 10 and string title = "Game".
+- Functions and return values: function, return, and main().
+- Classes, constructors, and object members.
+- Conditions: if, else if, else.
+- Loops: while, for item in collection, break, and continue.
+- Arrays with [] and objects with {}.
+- Boolean and null values: true, false, null.
+- Operators: and, or, not, is, and not is.
+- Legacy Spanish keywords remain supported for compatibility.
+
+## Project status
+
+C ez is an evolving language, not a native compiler or a drop-in replacement for C#. The VS Code extension executes the supported language subset in its integrated runtime.
