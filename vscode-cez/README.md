@@ -53,7 +53,7 @@ Se detectan importaciones circulares y se muestra un error si falta un archivo i
 
 ## Autocompletado e icono
 
-El autocompletado sugiere palabras clave, `main`, métodos de `consola.`, funciones integradas, símbolos del archivo y plantillas para `/importar`. Si no aparece, pulsa **Ctrl+Espacio**.
+El autocompletado sugiere palabras clave sin insertar una función completa al elegir `funcion` o `function`. Usa `funcionfn` para insertar la plantilla de una función. También ofrece métodos de consola y `/importar`. Si no aparece, pulsa **Ctrl+Espacio**.
 
 La extensión incluye un tema de iconos llamado **C ez File Icons** para mostrar un logo en archivos `.cez`. Para activarlo, abre la paleta de comandos y elige **Preferences: File Icon Theme → C ez File Icons**.
 
