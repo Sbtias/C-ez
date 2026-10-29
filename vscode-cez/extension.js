@@ -98,7 +98,8 @@ function activate(context) {
         const keywords = [
           ['clase', 'Define una clase', 'clase ${1:Nombre}:\n    ${0}'],
           ['funcion', 'Define una función', 'funcion ${1:nombre}(${2}):\n    ${0:retornar nada}'],
-          ['iniciar', 'Constructor de una clase', 'funcion iniciar(${1}):\n    ${0}'],\n          ['main', 'Punto de entrada ejecutado automáticamente', 'funcion main():\n    ${0}'],
+          ['iniciar', 'Constructor de una clase', 'funcion iniciar(${1}):\n    ${0}'],
+          ['main', 'Punto de entrada ejecutado automáticamente', 'funcion main():\n    ${0}'],
           ['retornar', 'Devuelve un valor desde una función'],
           ['si', 'Condición', 'si ${1:condicion}:\n    ${0}'],
           ['sino_si', 'Condición alternativa', 'sino_si ${1:condicion}:\n    ${0}'],
