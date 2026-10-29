@@ -101,7 +101,16 @@ function compile(source) {
   return out.join('\n');
 }
 
-function cezRange(start, end, step = 1) {\n  if (end === undefined) { end = start; start = 0; }\n  if (!step) throw new Error('rango(): el paso no puede ser cero');\n  const values = [];\n  if (step > 0) for (let i = start; i < end; i += step) values.push(i);\n  else for (let i = start; i > end; i += step) values.push(i);\n  return values;\n}\n\nfunction cezLength(value) {
+function cezRange(start, end, step = 1) {
+  if (end === undefined) { end = start; start = 0; }
+  if (!step) throw new Error('rango(): el paso no puede ser cero');
+  const values = [];
+  if (step > 0) for (let i = start; i < end; i += step) values.push(i);
+  else for (let i = start; i > end; i += step) values.push(i);
+  return values;
+}
+
+function cezLength(value) {
   if (value == null) return 0;
   return value.length ?? Object.keys(value).length;
 }
