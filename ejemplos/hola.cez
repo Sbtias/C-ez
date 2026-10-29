@@ -1,0 +1,12 @@
+# Mi primer programa C ez
+mostrar("Hola, mundo. Esto es C ez.")
+
+clase Persona:
+    funcion iniciar(nombre):
+        yo.nombre = nombre
+
+    funcion saludar():
+        mostrar("Hola, " + yo.nombre + "!")
+
+persona = Persona("Sbtias")
+persona.saludar()
