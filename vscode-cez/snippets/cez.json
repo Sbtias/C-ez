@@ -1,0 +1,39 @@
+{
+  "Programa básico": {
+    "prefix": "programa",
+    "body": [
+      "# ${1:Mi programa}",
+      "mostrar(\"${2:Hola, mundo!}\")"
+    ],
+    "description": "Programa mínimo de C ez"
+  },
+  "Clase": {
+    "prefix": "clase",
+    "body": [
+      "clase ${1:Persona}:",
+      "    funcion iniciar(${2:nombre}):",
+      "        yo.nombre = ${2:nombre}",
+      "    funcion ${3:saludar}():",
+      "        mostrar(\"Hola, \" + yo.nombre)"
+    ],
+    "description": "Clase sencilla orientada a objetos"
+  },
+  "Función": {
+    "prefix": "funcion",
+    "body": [
+      "funcion ${1:nombre}(${2}):",
+      "    ${3:retornar nada}"
+    ],
+    "description": "Define una función"
+  },
+  "Si / sino": {
+    "prefix": "si",
+    "body": [
+      "si ${1:condicion}:",
+      "    ${2:mostrar(\"sí\")}",
+      "sino:",
+      "    ${3:mostrar(\"no\")}"
+    ],
+    "description": "Condicional si/sino"
+  }
+}
