@@ -19,7 +19,7 @@
     "description": "Clase sencilla orientada a objetos"
   },
   "Función": {
-    "prefix": "funcion",
+    "prefix": "funcionfn",
     "body": [
       "funcion ${1:nombre}(${2}):",
       "    ${3:retornar nada}"
