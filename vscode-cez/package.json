@@ -1,124 +1,34 @@
 {
   "name": "cez-language",
-  "displayName": "C ez Language Support • v0.4.1",
-  "description": "C ez v0.4.1: lenguaje con resaltado de sintaxis, icono .cez, autocompletado e intérprete integrado.",
-  "version": "0.4.1",
+  "displayName": "C ez Language Support",
+  "description": "C ez 0.5.0: English C#-inspired syntax, library modules, syntax highlighting, autocomplete, and integrated runtime.",
+  "version": "0.5.0",
   "publisher": "sbtias",
-  "engines": {
-    "vscode": "^1.80.0"
-  },
-  "categories": [
-    "Programming Languages"
-  ],
-  "activationEvents": [
-    "onLanguage:cez"
-  ],
+  "engines": { "vscode": "^1.80.0" },
+  "activationEvents": ["onLanguage:cez"],
   "main": "./extension.js",
+  "categories": ["Programming Languages"],
+  "repository": { "type": "git", "url": "https://github.com/Sbtias/C-ez.git" },
   "contributes": {
-    "languages": [
-      {
-        "id": "cez",
-        "aliases": [
-          "C ez",
-          "cez"
-        ],
-        "extensions": [
-          ".cez"
-        ],
-        "configuration": "./language-configuration.json"
-      }
-    ],
-    "grammars": [
-      {
-        "language": "cez",
-        "scopeName": "source.cez",
-        "path": "./syntaxes/cez.tmLanguage.json"
-      }
-    ],
+    "languages": [{ "id": "cez", "aliases": ["C ez", "cez"], "extensions": [".cez"], "configuration": "./language-configuration.json" }],
+    "grammars": [{ "language": "cez", "scopeName": "source.cez", "path": "./syntaxes/cez.tmLanguage.json" }],
     "commands": [
-      {
-        "command": "cez.runFile",
-        "title": "C ez: Ejecutar archivo",
-        "icon": "$(play)"
-      },
-      {
-        "command": "cez.newFile",
-        "title": "C ez: Crear archivo .cez"
-      },
-      {
-        "command": "cez.showLanguageInfo",
-        "title": "C ez: Ver funciones del lenguaje"
-      },
-      {
-        "command": "cez.clearErrors",
-        "title": "C ez: Limpiar errores y salida"
-      }
+      { "command": "cez.runFile", "title": "C ez: Run File", "icon": "$(play)" },
+      { "command": "cez.newFile", "title": "C ez: Create .cez File" },
+      { "command": "cez.showLanguageInfo", "title": "C ez: Language Information" },
+      { "command": "cez.clearErrors", "title": "C ez: Clear Output and Errors" }
     ],
-    "keybindings": [
-      {
-        "command": "cez.runFile",
-        "key": "ctrl+f5",
-        "mac": "cmd+f5",
-        "when": "editorTextFocus && editorLangId == cez"
-      }
-    ],
-    "snippets": [
-      {
-        "language": "cez",
-        "path": "./snippets/cez.json"
-      }
-    ],
+    "keybindings": [{ "command": "cez.runFile", "key": "ctrl+f5", "mac": "cmd+f5", "when": "editorTextFocus && editorLangId == cez" }],
+    "snippets": [{ "language": "cez", "path": "./snippets/cez.json" }],
     "menus": {
       "editor/title": [
-        {
-          "command": "cez.runFile",
-          "when": "editorLangId == cez",
-          "group": "navigation",
-          "alt": "cez.runFile"
-        },
-        {
-          "command": "cez.newFile",
-          "when": "editorLangId == cez",
-          "group": "navigation"
-        }
+        { "command": "cez.runFile", "when": "editorLangId == cez", "group": "navigation" },
+        { "command": "cez.newFile", "when": "editorLangId == cez", "group": "navigation" }
       ],
-      "commandPalette": [
-        {
-          "command": "cez.runFile"
-        },
-        {
-          "command": "cez.newFile"
-        },
-        {
-          "command": "cez.clearErrors"
-        },
-        {
-          "command": "cez.showLanguageInfo"
-        }
-      ]
+      "commandPalette": [{ "command": "cez.runFile" }, { "command": "cez.newFile" }, { "command": "cez.clearErrors" }, { "command": "cez.showLanguageInfo" }]
     },
-    "iconThemes": [
-      {
-        "id": "cez-file-icons",
-        "label": "C ez File Icons",
-        "path": "./icons/cez-icon-theme.json"
-      }
-    ]
+    "iconThemes": [{ "id": "cez-file-icons", "label": "C ez File Icons", "path": "./icons/cez-icon-theme.json" }]
   },
-  "files": [
-    "extension.js",
-    "runtime.js",
-    "language-configuration.json",
-    "syntaxes/**",
-    "snippets/**",
-    "icons/**",
-    "README.md"
-  ],
-  "scripts": {
-    "vscode:prepublish": "node --check extension.js && node --check runtime.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Sbtias/C-ez.git"
-  }
+  "files": ["extension.js", "runtime.js", "language-configuration.json", "syntaxes/**", "snippets/**", "icons/**", "README.md"],
+  "scripts": { "vscode:prepublish": "node --check extension.js && node --check runtime.js" }
 }
