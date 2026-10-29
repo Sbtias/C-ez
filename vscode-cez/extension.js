@@ -125,17 +125,29 @@ function activate(context) {
         }
 
         const consoleMethods = [
-          ['escribir', 'Escribe texto o valores en la consola', 'escribir(\u0024{1:valor})'],
-          ['error', 'Escribe un mensaje de error', 'error(\u0024{1:mensaje})'],
-          ['advertir', 'Escribe una advertencia', 'advertir(\u0024{1:mensaje})'],
-          ['limpiar', 'Limpia la salida de la ejecución', 'limpiar()'],
-          ['/importar', 'Importa otro archivo .cez relativo al archivo actual', '/importar "\u0024{1:utilidades.cez}"']
+          ['escribir', 'Escribe texto o valores en la consola', 'escribir(' + '$' + '{1:valor})'],
+          ['log', 'Alias de escribir', 'log(' + '$' + '{1:valor})'],
+          ['error', 'Escribe un mensaje de error', 'error(' + '$' + '{1:mensaje})'],
+          ['advertir', 'Escribe una advertencia', 'advertir(' + '$' + '{1:mensaje})'],
+          ['limpiar', 'Limpia la salida de la ejecución', 'limpiar()']
         ];
+        const linePrefix = document.lineAt(position).text.slice(0, position.character);
+        const inConsole = /\\b(?:consola|console)\\.\\w*$/.test(linePrefix);
+        const inImport = /^\\s*\\/importar\\s+[^"']*$/.test(linePrefix);
         for (const [label, description, snippet] of consoleMethods) {
           const item = new vscode.CompletionItem(label, vscode.CompletionItemKind.Function);
-          item.detail = 'C ez · consola / módulos';
+          item.detail = 'C ez · método de consola';
           item.documentation = new vscode.MarkdownString(description);
           item.insertText = new vscode.SnippetString(snippet);
+          item.filterText = inConsole ? label : 'consola.' + label;
+          if (inConsole) item.range = new vscode.Range(position.line, linePrefix.lastIndexOf('.') + 1, position.line, position.character);
+          items.push(item);
+        }
+        if (inImport) {
+          const item = new vscode.CompletionItem('archivo.cez', vscode.CompletionItemKind.File);
+          item.detail = 'Ruta de un archivo que se importará';
+          item.insertText = new vscode.SnippetString('"utilidades.cez"');
+          item.documentation = new vscode.MarkdownString('Escribe el nombre de otro archivo .cez de esta carpeta.');
           items.push(item);
         }
 
