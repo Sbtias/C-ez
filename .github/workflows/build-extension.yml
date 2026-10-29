@@ -1,0 +1,39 @@
+name: Build C ez VS Code extension
+
+on:
+  push:
+    paths:
+      - "vscode-cez/**"
+      - ".github/workflows/build-extension.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vscode-cez
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate JavaScript
+        run: |
+          node --check extension.js
+          node --check runtime.js
+      - name: Install VS Code packager
+        run: npm install --global @vscode/vsce
+      - name: Build VSIX
+        run: vsce package
+      - name: Upload VSIX
+        uses: actions/upload-artifact@v4
+        with:
+          name: cez-language-vsix
+          path: vscode-cez/*.vsix
+          if-no-files-found: error
