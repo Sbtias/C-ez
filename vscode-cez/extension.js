@@ -167,7 +167,6 @@ function activate(context) {
           items.push(item);
         }
 
-        const linePrefix = document.lineAt(position).text.slice(0, position.character);
         if (/\bmostrar\s*\([^)]*$/.test(linePrefix)) {
           const item = new vscode.CompletionItem('Hola, mundo!', vscode.CompletionItemKind.Value);
           item.detail = 'Texto de ejemplo';
