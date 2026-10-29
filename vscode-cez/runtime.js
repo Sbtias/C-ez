@@ -48,7 +48,7 @@ function compile(source) {
       continue;
     }
 
-    const fn = code.match(/^(?:funcion|function)\s+([A-Za-z_$][\w$]*)\s*\((.*?)\)\s*:\s*$/);
+    const fn = code.match(/^(?:funcion|function)\s+([A-Za-z_$][\w$]*)\s*\((.*?)\)\s*:\s*;?\s*$/);
     if (fn) {
       const isMethod = stack.some(item => item.type === 'class') && indent > (inClassIndent ?? -1);
       const name = fn[1] === 'iniciar' ? 'constructor' : fn[1];
