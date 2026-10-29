@@ -1,6 +1,6 @@
 # C ez Language Support · v0.4.1
 
-<p align="center"><img src="./icons/cez-logo.svg" alt="C ez logo" width="160"></p>
+<p align="center"><strong>C EZ · LANGUAGE SUPPORT</strong></p>
 
 **Versión de la extensión: `0.4.1`**
 
