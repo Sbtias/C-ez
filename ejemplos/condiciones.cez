@@ -1,0 +1,11 @@
+edad = 16
+
+si edad >= 18:
+    mostrar("Eres mayor de edad.")
+sino:
+    mostrar("Todavía eres menor de edad.")
+
+contador = 1
+mientras contador <= 3:
+    mostrar("Vuelta " + str(contador))
+    contador = contador + 1
