@@ -97,7 +97,7 @@ function activate(context) {
         const keywords = [
           ['clase', 'Define una clase', 'clase ${1:Nombre}:\n    ${0}'],
           ['funcion', 'Define una función', 'funcion ${1:nombre}(${2}):\n    ${0:retornar nada}'],
-          ['iniciar', 'Constructor de una clase', 'funcion iniciar(${1}):\n    ${0}'],
+          ['iniciar', 'Constructor de una clase', 'funcion iniciar(${1}):\n    ${0}'],\n          ['main', 'Punto de entrada ejecutado automáticamente', 'funcion main():\n    ${0}'],
           ['retornar', 'Devuelve un valor desde una función'],
           ['si', 'Condición', 'si ${1:condicion}:\n    ${0}'],
           ['sino_si', 'Condición alternativa', 'sino_si ${1:condicion}:\n    ${0}'],
@@ -121,10 +121,10 @@ function activate(context) {
         }
 
         const consoleMethods = [
-          ['consola.escribir', 'Escribe texto o valores en la consola', 'consola.escribir(\u0024{1:valor})'],
-          ['consola.error', 'Escribe un mensaje de error', 'consola.error(\u0024{1:mensaje})'],
-          ['consola.advertir', 'Escribe una advertencia', 'consola.advertir(\u0024{1:mensaje})'],
-          ['consola.limpiar', 'Limpia la salida de la ejecución', 'consola.limpiar()'],
+          ['escribir', 'Escribe texto o valores en la consola', 'consola.escribir(\u0024{1:valor})'],
+          ['error', 'Escribe un mensaje de error', 'consola.error(\u0024{1:mensaje})'],
+          ['advertir', 'Escribe una advertencia', 'consola.advertir(\u0024{1:mensaje})'],
+          ['limpiar', 'Limpia la salida de la ejecución', 'consola.limpiar()'],
           ['/importar', 'Importa otro archivo .cez relativo al archivo actual', '/importar "\u0024{1:utilidades.cez}"']
         ];
         for (const [label, description, snippet] of consoleMethods) {
@@ -182,7 +182,7 @@ function activate(context) {
         return items;
       }
     },
-    ...'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_'.split(''), '.', '('
+    ...'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_/'.split(''), '.', '('
   );
   context.subscriptions.push(completionProvider);
 
