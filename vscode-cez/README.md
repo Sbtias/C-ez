@@ -1,18 +1,30 @@
 # C ez Language Support
 
-Extensión de desarrollo para archivos .cez: resaltado de sintaxis, snippets y comandos.
+Extensión de VS Code para archivos `.cez`, con intérprete integrado.
 
-## Probar
-1. Abre esta carpeta en VS Code.
-2. Pulsa F5 para abrir una ventana Extension Development Host.
-3. En esa ventana, abre la raíz del repositorio C-ez y un archivo .cez.
-4. Usa Ctrl+F5 (Windows/Linux) o Cmd+F5 (macOS), o el comando C ez: Ejecutar archivo.
+## Instalar
 
-## Empaquetar
-Con Node.js instalado, ejecuta:
-    npm install -g @vscode/vsce
-    vsce package
+Descarga el artefacto `cez-language-vsix` desde la ejecución más reciente de GitHub Actions en https://github.com/Sbtias/C-ez/actions. En VS Code, usa **Extensiones → ... → Instalar desde VSIX...**.
 
-En VS Code usa Extensiones > menú ... > Instalar desde VSIX para instalar el paquete generado.
+## Ejecutar
 
-En Windows el comando Python predeterminado es py -3. Cámbialo en Ajustes con cez.pythonPath si es necesario.
+Abre un archivo `.cez` y pulsa **Ctrl+F5** en Windows/Linux o **Cmd+F5** en macOS. La salida y los errores aparecen en el canal de salida **C ez**.
+
+No requiere Python ni dependencias externas en tiempo de ejecución.
+
+## Sintaxis rápida
+
+```cez
+funcion sumar(a, b):
+    retornar a + b
+
+si sumar(2, 3) es 5:
+    mostrar("Todo funciona")
+sino:
+    mostrar("Revisa el programa")
+
+para i en rango(3):
+    mostrar(i)
+```
+
+Incluye resaltado, snippets, creación de archivos, ejecución integrada, funciones, clases, condiciones, bucles y utilidades básicas. C ez está en desarrollo y solo implementa el subconjunto documentado.
