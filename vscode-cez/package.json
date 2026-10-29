@@ -116,5 +116,9 @@
   ],
   "scripts": {
     "vscode:prepublish": "node --check extension.js && node --check runtime.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sbtias/C-ez.git"
   }
 }
