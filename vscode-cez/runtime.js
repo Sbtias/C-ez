@@ -84,7 +84,7 @@ function compile(source) {
       .replace(/^continuar\b/, 'continue');
     code = expression(code);
     if (/^(?:si|sino|sino_si|mientras|para|clase|funcion)\b/.test(code)) {
-      throw new Error('Error de sintaxis en línea ' + (index + 1) + ': instrucción no reconocida: ' + trimmed);
+      throw new Error('Error de sintaxis en línea ' + (index + 1) + ': instrucción incompleta o no reconocida: ' + trimmed + '. Revisa los paréntesis, los dos puntos y la indentación.');
     }
     out.push(pad + code + ';');
   }
