@@ -2,7 +2,7 @@
   "name": "cez-language",
   "displayName": "C ez Language Support",
   "description": "Lenguaje C ez con intérprete integrado, resaltado, snippets y ejecución sin dependencias externas.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "sbtias",
   "engines": {
     "vscode": "^1.80.0"
@@ -38,7 +38,8 @@
     "commands": [
       {
         "command": "cez.runFile",
-        "title": "C ez: Ejecutar archivo"
+        "title": "C ez: Ejecutar archivo",
+        "icon": "$(play)"
       },
       {
         "command": "cez.newFile",
@@ -47,6 +48,10 @@
       {
         "command": "cez.showLanguageInfo",
         "title": "C ez: Ver funciones del lenguaje"
+      },
+      {
+        "command": "cez.clearErrors",
+        "title": "C ez: Limpiar errores y salida"
       }
     ],
     "keybindings": [
@@ -62,7 +67,36 @@
         "language": "cez",
         "path": "./snippets/cez.json"
       }
-    ]
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "cez.runFile",
+          "when": "editorLangId == cez",
+          "group": "navigation",
+          "alt": "cez.runFile"
+        },
+        {
+          "command": "cez.newFile",
+          "when": "editorLangId == cez",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "cez.runFile"
+        },
+        {
+          "command": "cez.newFile"
+        },
+        {
+          "command": "cez.clearErrors"
+        },
+        {
+          "command": "cez.showLanguageInfo"
+        }
+      ]
+    }
   },
   "files": [
     "extension.js",
