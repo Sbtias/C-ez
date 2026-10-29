@@ -1,0 +1,10 @@
+{
+  "iconDefinitions": {
+    "_cez": {
+      "iconPath": "./cez-file.svg"
+    }
+  },
+  "fileExtensions": {
+    "cez": "_cez"
+  }
+}
