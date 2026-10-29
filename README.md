@@ -1,68 +1,53 @@
 # C ez
 
-**C ez** is a lightweight, object-oriented programming language with a C#-inspired style. Source files use the .cez extension. It keeps indentation-based blocks while adding familiar ideas such as using directives, typed variable declarations, classes, and Console.WriteLine().
-
-## Visual Studio Code extension
-
-The vscode-cez folder contains the language extension and an integrated JavaScript runtime. You do not need Python or a separate runtime to use the VS Code extension.
-
-1. Open the repository's Actions tab: https://github.com/Sbtias/C-ez/actions
-2. Open the latest Build C ez VS Code extension run.
-3. Download the cez-language-vsix artifact.
-4. In VS Code, open Extensions, select ..., then choose Install from VSIX...
-5. Open a .cez file and press Ctrl+F5 (Windows/Linux) or Cmd+F5 (macOS).
+C ez is a small, beginner-friendly programming language inspired by a few ideas from C#. It is **not C# with a different name**: C ez keeps simple indentation-based blocks, optional semicolons, and short commands that are easy to read.
 
 ## Quick start
 
 ```cez
 using System;
 using Text;
-using Random;
 
-public class Player:
-    public function constructor(name):
-        this.name = name
+func greet(name):
+    say("Hello, " + Text.ToUpper(name))
 
-    public function Greet():
-        Console.WriteLine("Hello, " + Text.ToUpper(this.name))
+func main():
+    greet("world")
 
-function main():
-    Console.WriteLine("Welcome to C ez!")
-    Console.WriteLine("Random number: " + Random.Next(1, 101))
-
-    player = new Player("Alex")
-    player.Greet()
+    repeat 3 times:
+        say("Let's build something!")
 ```
 
-C ez uses indentation for blocks, so a colon starts a class, function, or control-flow block. Semicolons are optional. It is not a full C# compiler, and braces-based C# syntax is not supported.
+Save this as `main.cez` and run it with the C ez VS Code extension. The `main()` function runs automatically.
 
-## Standard library
+## Easy syntax
 
-Library modules are built in. Add a using line at the top of a file, then call the module's methods.
+- Use `func` to create a function. `function` also works.
+- Use `say(...)` to print a message. `print(...)` and `Console.WriteLine(...)` also work.
+- Start a block with a colon and indent its contents. No braces needed.
+- Semicolons are optional.
+- Use `if condition:`, `else:`, `while condition:`, and `for item in items:`.
+- Use `repeat 5 times:` to repeat a block a fixed number of times.
+- Use `class Player:` when you need objects, but simple programs do not need classes.
 
-| Import | Example | Purpose |
+## Built-in libraries
+
+Add a `using` directive to show which built-in library your program uses. These modules are included with the runtime; `using` does not download external packages.
+
+| Library | What it does | Example |
 | --- | --- | --- |
-| using System; | Console.WriteLine("Hello") | Console output and runtime information |
-| using Random; | Random.Next(1, 10) | Random numbers and random selection |
-| using Text; | Text.ToUpper("hello") | Text conversion, trimming, searching, splitting |
-| using Dates; | Dates.Now() | Date/time values and timestamps |
-| using Collections; | Collections.Add(items, 5) | Common array/list operations |
-| using Json; | Json.Stringify(data) | JSON parsing and serialization |
+| `System` | Console output | `say("Hello")` |
+| `Text` | Text helpers | `Text.ToUpper("hello")` |
+| `Random` | Random values | `Random.Next(1, 10)` |
+| `Dates` | Date and time | `Dates.Now()` |
+| `Collections` | List helpers | `Collections.Add(items, "apple")` |
+| `Json` | JSON data | `Json.Stringify(data)` |
 
-These modules are available in the integrated runtime. using documents which modules a program depends on; it does not download packages from the internet.
+## Visual Studio Code
 
-## Language features
+1. Open [GitHub Actions](https://github.com/Sbtias/C-ez/actions).
+2. Open the latest build and download the `cez-language-vsix` artifact.
+3. In VS Code, select **Extensions → ... → Install from VSIX...**.
+4. Open a `.cez` file and press **Ctrl+F5** (Windows/Linux) or **Cmd+F5** (macOS).
 
-- Variables and expressions, including typed declarations such as int score = 10 and string title = "Game".
-- Functions and return values: function, return, and main().
-- Classes, constructors, and object members.
-- Conditions: if, else if, else.
-- Loops: while, for item in collection, break, and continue.
-- Arrays with [] and objects with {}.
-- Boolean and null values: true, false, null.
-- Operators: and, or, not, is, and not is.
-- Legacy Spanish keywords remain supported for compatibility.
-
-## Project status
-
-C ez is an evolving language, not a native compiler or a drop-in replacement for C#. The VS Code extension executes the supported language subset in its integrated runtime.
+C ez is still evolving. It borrows selected ideas from C# while prioritizing readable code for beginners.
