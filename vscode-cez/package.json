@@ -1,8 +1,8 @@
 {
   "name": "cez-language",
   "displayName": "C ez Language Support",
-  "description": "Lenguaje C ez con intérprete integrado, resaltado, snippets y ejecución sin dependencias externas.",
-  "version": "0.3.0",
+  "description": "Lenguaje C ez con autocompletado IntelliSense, intérprete integrado y ejecución sin dependencias externas.",
+  "version": "0.3.1",
   "publisher": "sbtias",
   "engines": {
     "vscode": "^1.80.0"
