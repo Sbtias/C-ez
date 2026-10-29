@@ -111,6 +111,7 @@
     "language-configuration.json",
     "syntaxes/**",
     "snippets/**",
+    "icons/**",
     "README.md"
   ],
   "scripts": {
