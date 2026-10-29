@@ -201,13 +201,8 @@ function activate(context) {
     } catch (_) {
       await vscode.workspace.fs.writeFile(uri, Buffer.from(
         '# Mi primer programa C ez\n' +
-        'clase Persona:\n' +
-        '    funcion iniciar(nombre):\n' +
-        '        yo.nombre = nombre\n' +
-        '    funcion saludar():\n' +
-        '        mostrar("Hola, " + yo.nombre)\n' +
-        '\npersona = Persona("mundo")\n' +
-        'persona.saludar()\n', 'utf8'));
+        'funcion main():\n' +
+        '    consola.escribir("Hola, mundo!")\n', 'utf8'));
     }
     const doc = await vscode.workspace.openTextDocument(uri);
     await vscode.window.showTextDocument(doc);
