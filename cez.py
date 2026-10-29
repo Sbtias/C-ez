@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 KEYWORDS = {
-    'clase': 'class', 'funcion': 'def', 'retornar': 'return',
+    'clase': 'class', 'funcion': 'def', 'iniciar': '__init__', 'retornar': 'return',
     'si': 'if', 'sino': 'else', 'sino_si': 'elif',
     'mientras': 'while', 'para': 'for', 'en': 'in',
     'romper': 'break', 'continuar': 'continue',
