@@ -1,42 +1,61 @@
 {
   "Basic program": {
     "prefix": "program",
-    "body": ["using System;", "", "function main():", "    Console.WriteLine(\"Hello, world!\")"],
-    "description": "A minimal C ez program"
-  },
-  "Class": {
-    "prefix": "class",
-    "body": ["public class ${1:Player}:", "    public function constructor(${2:name}):", "        this.name = ${2:name}", "", "    public function Greet():", "        Console.WriteLine(\"Hello, \" + this.name)"],
-    "description": "A simple object-oriented class"
+    "body": [
+      "using System;",
+      "",
+      "func main():",
+      "    say(\"Hello, world!\")"
+    ],
+    "description": "A simple C ez program"
   },
   "Function": {
-    "prefix": "function",
-    "body": ["function ${1:name}(${2}):", "    ${3:return null}"],
-    "description": "Declare a function"
+    "prefix": "func",
+    "body": [
+      "func greet(name):",
+      "    say(\"Hello, \" + name)"
+    ],
+    "description": "Declare a simple function"
+  },
+  "Repeat loop": {
+    "prefix": "repeat",
+    "body": [
+      "repeat 5 times:",
+      "    say(\"Again!\")"
+    ],
+    "description": "Repeat a block a fixed number of times"
   },
   "If / else": {
     "prefix": "if",
-    "body": ["if ${1:condition}:", "    ${2:Console.WriteLine(\"yes\")}", "else:", "    ${3:Console.WriteLine(\"no\")}"],
+    "body": [
+      "if condition:",
+      "    say(\"yes\")",
+      "else:",
+      "    say(\"no\")"
+    ],
     "description": "Conditional statement"
-  },
-  "Main function": {
-    "prefix": "main",
-    "body": ["function main():", "    ${1:Console.WriteLine(\"Hello, world!\")}"],
-    "description": "Automatically invoked entry point"
-  },
-  "Console output": {
-    "prefix": "write",
-    "body": ["Console.WriteLine(${1:value})"],
-    "description": "Write a value to the C ez output"
   },
   "Using library": {
     "prefix": "using",
-    "body": ["using ${1|System,Random,Text,Dates,Collections,Json|};"],
-    "description": "Import a built-in standard library module"
+    "body": [
+      "using Text;"
+    ],
+    "description": "Use a built-in library module"
   },
-  "Import local file": {
-    "prefix": "import",
-    "body": ["/import \"${1:utilities.cez}\""],
-    "description": "Include another local C ez source file"
+  "Class": {
+    "prefix": "class",
+    "body": [
+      "class Player:",
+      "    func greet():",
+      "        say(\"Hello!\")"
+    ],
+    "description": "Create a class when you need objects"
+  },
+  "Output": {
+    "prefix": "say",
+    "body": [
+      "say(\"Hello!\")"
+    ],
+    "description": "Print a message"
   }
 }
