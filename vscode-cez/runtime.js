@@ -93,7 +93,7 @@ function compile(source) {
       .replace(/^importar\s+/, 'const ');
     code = expression(code);
     if (/^(?:si|sino|sino_si|mientras|para|clase|funcion)\b/.test(code)) {
-      throw new Error('Sintaxis no válida en la línea ' + lineNo);
+      throw new Error('Error de sintaxis en línea ' + lineNo + ': instrucción no reconocida: ' + trimmed);
     }
     out.push(pad + code + ';');
   }
@@ -129,7 +129,8 @@ function run(source, filename = 'main.cez') {
     new vm.Script(js, { filename }).runInContext(sandbox, { timeout: 3000 });
     return { output: output.join('\n'), javascript: js };
   } catch (error) {
-    const wrapped = new Error(error.message);
+    const wrapped = new Error(error.message + '\\nArchivo: ' + filename + (error.stack ? '\\nDetalles: ' + error.stack.split('\\n').slice(1, 3).join(' | ') : ''));
+    wrapped.sourceLine = Number((error.message.match(/línea (\\d+)/i) || [])[1]) || null;
     wrapped.stack = error.stack;
     throw wrapped;
   }
