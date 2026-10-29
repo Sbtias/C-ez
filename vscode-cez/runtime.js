@@ -11,7 +11,7 @@ function compile(source) {
     .replace(/\bnot\s+is\b/g, '!==').replace(/\bis\b/g, '===')
     .replace(/\bnot\s+/g, '!').replace(/\bmostrar\s*\(/g, 'Console.WriteLine(')
     .replace(/\b(?:say|print)\s*\(/g, 'Console.WriteLine(')
-    .replace(/\bconsola\.escribir\b/g, 'Console.WriteLine')
+    .replace(/\b(?:consola|console)\.escribir\b/gi, 'Console.WriteLine')
     .replace(/\bconsola\.advertir\b/g, 'Console.WriteWarning')
     .replace(/\bconsola\.error\b/g, 'Console.WriteError')
     .replace(/\bconsola\.limpiar\b/g, 'Console.Clear')
