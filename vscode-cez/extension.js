@@ -6,14 +6,14 @@ const { run } = require('./runtime');
 async function expandImports(source, filename, visited = new Set()) {
   const absolute = path.resolve(filename);
   if (visited.has(absolute)) {
-    throw new Error('Importación circular detectada en: ' + path.basename(absolute));
+    throw new Error('Circular import detected in: ' + path.basename(absolute));
   }
   visited.add(absolute);
   const lines = source.replace(/\r/g, '').split('\n');
   const expanded = [];
   for (let i = 0; i < lines.length; i++) {
     const trimmed = lines[i].trim();
-    const match = trimmed.match(/^\/importar\s+["']?([^"'\s]+)["']?\s*$/);
+    const match = trimmed.match(/^\/import(?:ar)?\s+["']?([^"'\s]+)["']?\s*$/);
     if (!match) {
       expanded.push(lines[i]);
       continue;
@@ -25,11 +25,11 @@ async function expandImports(source, filename, visited = new Set()) {
     try {
       imported = await fs.promises.readFile(target, 'utf8');
     } catch (error) {
-      throw new Error('No se pudo importar "' + importPath + '" desde ' + path.basename(absolute) + ':' + (i + 1) + '. Comprueba que el archivo exista. ' + error.message);
+      throw new Error('Could not import "' + importPath + '" from ' + path.basename(absolute) + ':' + (i + 1) + '. Make sure the file exists. ' + error.message);
     }
-    expanded.push('# --- Importado: ' + path.basename(target) + ' ---');
+    expanded.push('# --- Imported: ' + path.basename(target) + ' ---');
     expanded.push(await expandImports(imported, target, new Set(visited)));
-    expanded.push('# --- Fin de ' + path.basename(target) + ' ---');
+    expanded.push('# --- End of ' + path.basename(target) + ' ---');
   }
   return expanded.join('\n');
 }
@@ -41,30 +41,30 @@ function activate(context) {
 
   async function runActiveFile() {
     const editor = vscode.window.activeTextEditor;
-    if (!editor) return vscode.window.showWarningMessage('Abre un archivo .cez primero.');
+    if (!editor) return vscode.window.showWarningMessage('Open a .cez file first.');
     const document = editor.document;
     if (path.extname(document.fileName).toLowerCase() !== '.cez') {
-      return vscode.window.showWarningMessage('El archivo activo debe terminar en .cez.');
+      return vscode.window.showWarningMessage('The active file must have a .cez extension.');
     }
     await document.save();
     output.clear();
     diagnostics.delete(document.uri);
-    output.appendLine('C ez • Ejecutando ' + path.basename(document.fileName));
+    output.appendLine('C ez • Running ' + path.basename(document.fileName));
     try {
       const source = await expandImports(document.getText(), document.fileName);
       const result = run(source, document.fileName);
       if (result.output) output.appendLine(result.output);
-      else output.appendLine('(sin salida)');
+      else output.appendLine('(no output)');
       output.appendLine('');
-      output.appendLine('✓ Ejecución terminada sin errores.');
+      output.appendLine('✓ Execution completed successfully.');
       output.show(true);
-      vscode.window.setStatusBarMessage('C ez: ejecución terminada', 3000);
+      vscode.window.setStatusBarMessage('C ez: execution completed', 3000);
     } catch (error) {
       const message = String(error.message || error);
-      output.appendLine('✖ ERROR DE C EZ');
+      output.appendLine('✖ C EZ ERROR');
       output.appendLine(message);
       output.appendLine('');
-      output.appendLine('Consejo: revisa la sintaxis y los nombres de variables de la línea indicada.');
+      output.appendLine('Tip: check syntax and variable names on the reported line.');
       const match = message.match(/línea\s+(\d+)/i);
       if (match) {
         const line = Math.max(0, Number(match[1]) - 1);
@@ -81,7 +81,7 @@ function activate(context) {
   }
 
 
-  // Autocompletado de palabras clave, funciones integradas y símbolos del archivo.
+  // Completion for keywords, built-in functions, and file symbols.
   const completionProvider = vscode.languages.registerCompletionItemProvider(
     { language: 'cez', scheme: 'file' },
     {
@@ -97,12 +97,20 @@ function activate(context) {
         };
 
         const keywords = [
-          ['clase', 'Define una clase', 'clase ${1:Nombre}:\n    ${0}'],
+          ['class', 'Define a class', 'class ${1:Name}:\n    ${0}'],
+          ['return', 'Return a value'],
+          ['if', 'Conditional statement', 'if ${1:condition}:\n    ${0}'],
+          ['else', 'Alternative branch', 'else:\n    ${0}'],
+          ['while', 'Loop while a condition is true', 'while ${1:condition}:\n    ${0}'],
+          ['for', 'Iterate through a collection', 'for ${1:item} in ${2:items}:\n    ${0}'],
+          ['using', 'Import a built-in library module', 'using ${1|System,Random,Text,Dates,Collections,Json|};'],
+          ['true', 'Boolean true'], ['false', 'Boolean false'], ['null', 'Null value'], ['this', 'Current object reference'],
+          ['public', 'Public access modifier'], ['private', 'Private access modifier'], ['int', 'Integer type'], ['string', 'String type'], ['bool', 'Boolean type'], 
           ['funcion', 'Palabra clave para declarar una función'],
           ['function', 'Alias en inglés de funcion'],
           ['iniciar', 'Constructor de una clase', 'funcion iniciar(${1}):\n    ${0}'],
           ['main', 'Nombre de la función principal'],
-          ['retornar', 'Devuelve un valor desde una función'],
+          ['retornar', 'Devuelve un valor from una función'],
           ['si', 'Condición', 'si ${1:condicion}:\n    ${0}'],
           ['sino_si', 'Condición alternativa', 'sino_si ${1:condicion}:\n    ${0}'],
           ['sino', 'Bloque alternativo', 'sino:\n    ${0}'],
@@ -118,7 +126,7 @@ function activate(context) {
         ];
         for (const [label, description, snippet] of keywords) {
           const item = new vscode.CompletionItem(label, vscode.CompletionItemKind.Keyword);
-          item.detail = 'C ez · palabra clave';
+          item.detail = 'C ez · keyword';
           item.documentation = new vscode.MarkdownString(description);
           if (snippet) item.insertText = new vscode.SnippetString(snippet);
           items.push(item);
@@ -132,11 +140,11 @@ function activate(context) {
           ['limpiar', 'Limpia la salida de la ejecución', 'limpiar()']
         ];
         const linePrefix = document.lineAt(position).text.slice(0, position.character);
-        const inConsole = linePrefix.includes('consola.') || linePrefix.includes('console.');
-        const inImport = linePrefix.trimStart().startsWith('/importar ');
+        const inConsole = linePrefix.includes('Console.') || linePrefix.includes('consola.') || linePrefix.includes('console.');
+        const inImport = linePrefix.trimStart().startsWith('/import ') || linePrefix.trimStart().startsWith('/importar ');
         for (const [label, description, snippet] of consoleMethods) {
           const item = new vscode.CompletionItem(label, vscode.CompletionItemKind.Function);
-          item.detail = 'C ez · método de consola';
+          item.detail = 'C ez · console method';
           item.documentation = new vscode.MarkdownString(description);
           item.insertText = new vscode.SnippetString(snippet);
           item.filterText = inConsole ? label : 'consola.' + label;
@@ -161,7 +169,7 @@ function activate(context) {
         ];
         for (const [label, description, snippet] of builtins) {
           const item = new vscode.CompletionItem(label, vscode.CompletionItemKind.Function);
-          item.detail = 'C ez · función integrada';
+          item.detail = 'C ez · built-in function';
           item.documentation = new vscode.MarkdownString(description);
           item.insertText = new vscode.SnippetString(snippet);
           items.push(item);
@@ -174,7 +182,7 @@ function activate(context) {
           items.push(item);
         }
 
-        // Sugiere variables, funciones y clases declaradas en el documento.
+        // Suggest variables, functions, and classes declared in the document.
         const source = document.getText();
         const seen = new Set();
         const patterns = [
@@ -211,26 +219,27 @@ function activate(context) {
     if (!uri) return;
     try {
       await vscode.workspace.fs.stat(uri);
-      const choice = await vscode.window.showWarningMessage('El archivo ya existe. ¿Abrirlo?', 'Abrir');
-      if (choice !== 'Abrir') return;
+      const choice = await vscode.window.showWarningMessage('The file already exists. Open it?', 'Open');
+      if (choice !== 'Open') return;
     } catch (_) {
       await vscode.workspace.fs.writeFile(uri, Buffer.from(
-        '# Mi primer programa C ez\n' +
-        'funcion main():\n' +
-        '    consola.escribir("Hola, mundo!")\n', 'utf8'));
+        '# My first C ez program\n' +
+        'using System;\n' +
+        'function main():\n' +
+        '    Console.WriteLine("Hello, world!")\n', 'utf8'));
     }
     const doc = await vscode.workspace.openTextDocument(uri);
     await vscode.window.showTextDocument(doc);
   }));
 
   context.subscriptions.push(vscode.commands.registerCommand('cez.showLanguageInfo', () => {
-    vscode.window.showInformationMessage('C ez incluye variables, funciones, clases, condiciones, bucles y ejecución integrada sin Python.');
+    vscode.window.showInformationMessage('C ez includes variables, functions, classes, conditions, loops, and an integrated runtime without Python.');
   }));
 
   context.subscriptions.push(vscode.commands.registerCommand('cez.clearErrors', () => {
     diagnostics.clear();
     output.clear();
-    vscode.window.showInformationMessage('Panel de errores de C ez limpiado.');
+    vscode.window.showInformationMessage('C ez output and errors cleared.');
   }));
 }
 function deactivate() {}
