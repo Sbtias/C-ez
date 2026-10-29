@@ -1,4 +1,8 @@
-# C ez Language Support
+# C ez Language Support · v0.4.1
+
+<p align="center"><img src="./icons/cez-logo.svg" alt="C ez logo" width="160"></p>
+
+**Versión de la extensión: `0.4.1`**
 
 Extensión de VS Code para archivos `.cez`, con intérprete integrado, autocompletado, consola y módulos.
 
