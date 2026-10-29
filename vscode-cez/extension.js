@@ -33,7 +33,7 @@ function activate(context) {
   context.subscriptions.push(vscode.commands.registerCommand('cez.newFile', async () => {
     const uri = await vscode.window.showSaveDialog({
       filters: { 'C ez': ['cez'] },
-      defaultUri: vscode.Uri.file(path.join(vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '.', 'main.cez')
+      defaultUri: vscode.Uri.file(path.join(vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '.', 'main.cez'))
     });
     if (!uri) return;
     try {
