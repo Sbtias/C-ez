@@ -1,6 +1,38 @@
 const vscode = require('vscode');
 const path = require('path');
+const fs = require('fs');
 const { run } = require('./runtime');
+
+async function expandImports(source, filename, visited = new Set()) {
+  const absolute = path.resolve(filename);
+  if (visited.has(absolute)) {
+    throw new Error('Importación circular detectada en: ' + path.basename(absolute));
+  }
+  visited.add(absolute);
+  const lines = source.replace(/\r/g, '').split('\n');
+  const expanded = [];
+  for (let i = 0; i < lines.length; i++) {
+    const trimmed = lines[i].trim();
+    const match = trimmed.match(/^\/importar\s+["']?([^"'\s]+)["']?\s*$/);
+    if (!match) {
+      expanded.push(lines[i]);
+      continue;
+    }
+    let importPath = match[1];
+    if (!path.extname(importPath)) importPath += '.cez';
+    const target = path.resolve(path.dirname(absolute), importPath);
+    let imported;
+    try {
+      imported = await fs.promises.readFile(target, 'utf8');
+    } catch (error) {
+      throw new Error('No se pudo importar "' + importPath + '" desde ' + path.basename(absolute) + ':' + (i + 1) + '. Comprueba que el archivo exista. ' + error.message);
+    }
+    expanded.push('# --- Importado: ' + path.basename(target) + ' ---');
+    expanded.push(await expandImports(imported, target, new Set(visited)));
+    expanded.push('# --- Fin de ' + path.basename(target) + ' ---');
+  }
+  return expanded.join('\n');
+}
 
 function activate(context) {
   const output = vscode.window.createOutputChannel('C ez');
@@ -19,7 +51,7 @@ function activate(context) {
     diagnostics.delete(document.uri);
     output.appendLine('C ez • Ejecutando ' + path.basename(document.fileName));
     try {
-      const result = run(document.getText(), document.fileName);
+      const source = await expandImports(document.getText(), document.fileName);\n      const result = run(source, document.fileName);
       if (result.output) output.appendLine(result.output);
       else output.appendLine('(sin salida)');
       output.appendLine('');
@@ -85,6 +117,21 @@ function activate(context) {
           item.detail = 'C ez · palabra clave';
           item.documentation = new vscode.MarkdownString(description);
           if (snippet) item.insertText = new vscode.SnippetString(snippet);
+          items.push(item);
+        }
+
+        const consoleMethods = [
+          ['consola.escribir', 'Escribe texto o valores en la consola', 'consola.escribir(\u0024{1:valor})'],
+          ['consola.error', 'Escribe un mensaje de error', 'consola.error(\u0024{1:mensaje})'],
+          ['consola.advertir', 'Escribe una advertencia', 'consola.advertir(\u0024{1:mensaje})'],
+          ['consola.limpiar', 'Limpia la salida de la ejecución', 'consola.limpiar()'],
+          ['/importar', 'Importa otro archivo .cez relativo al archivo actual', '/importar "\u0024{1:utilidades.cez}"']
+        ];
+        for (const [label, description, snippet] of consoleMethods) {
+          const item = new vscode.CompletionItem(label, vscode.CompletionItemKind.Function);
+          item.detail = 'C ez · consola / módulos';
+          item.documentation = new vscode.MarkdownString(description);
+          item.insertText = new vscode.SnippetString(snippet);
           items.push(item);
         }
 
