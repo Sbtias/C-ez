@@ -27,10 +27,10 @@
     "using": { "name": "keyword.control.import.cez", "match": "\\b(using)\\b|^\\s*/import(?:ar)?\\b" },
     "keywords": {
       "name": "keyword.control.cez",
-      "match": "\\b(class|function|fn|return|if|else|elseif|else_if|while|for|in|break|continue|and|or|not|is|public|private|protected|static|void|int|double|float|string|bool|var|let|const|clase|funcion|retornar|si|sino|sino_si|mientras|para|en|romper|continuar|y|o|no|es)\\b"
+      "match": "\\b(class|function|func|fn|return|if|else|elseif|else_if|while|for|repeat|times|in|break|continue|and|or|not|is|public|private|protected|static|void|int|double|float|string|bool|var|let|const|clase|funcion|retornar|si|sino|sino_si|mientras|para|en|romper|continuar|y|o|no|es)\\b"
     },
     "constants": { "name": "constant.language.cez", "match": "\\b(true|false|null|this|verdadero|falso|nada|yo)\\b" },
-    "functions": { "name": "support.function.cez", "match": "\\b(main|length|range|mostrar|longitud|rango|texto|numero|tipo)\\b" },
+    "functions": { "name": "support.function.cez", "match": "\\b(main|say|print|length|range|mostrar|longitud|rango|texto|numero|tipo)\\b" },
     "libraries": { "name": "support.type.cez", "match": "\\b(System|Random|Text|Dates|Collections|Json|Cez)\\b" },
     "console": {
       "patterns": [
