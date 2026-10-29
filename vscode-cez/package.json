@@ -1,8 +1,8 @@
 {
   "name": "cez-language",
   "displayName": "C ez Language Support",
-  "description": "Lenguaje C ez con autocompletado IntelliSense, intérprete integrado y ejecución sin dependencias externas.",
-  "version": "0.3.1",
+  "description": "Lenguaje C ez con main(), consola, importación de módulos, autocompletado e intérprete integrado.",
+  "version": "0.4.0",
   "publisher": "sbtias",
   "engines": {
     "vscode": "^1.80.0"
@@ -96,7 +96,14 @@
           "command": "cez.showLanguageInfo"
         }
       ]
-    }
+    },
+    "iconThemes": [
+      {
+        "id": "cez-file-icons",
+        "label": "C ez File Icons",
+        "path": "./icons/cez-icon-theme.json"
+      }
+    ]
   },
   "files": [
     "extension.js",
