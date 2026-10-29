@@ -2,8 +2,8 @@
   "Programa básico": {
     "prefix": "programa",
     "body": [
-      "# ${1:Mi programa}",
-      "mostrar(\"${2:Hola, mundo!}\")"
+      "funcion main():",
+      "    consola.escribir(\"${1:Hola, mundo!}\")"
     ],
     "description": "Programa mínimo de C ez"
   },
