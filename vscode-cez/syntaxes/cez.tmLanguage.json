@@ -1,0 +1,62 @@
+{
+  "scopeName": "source.cez",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#constants"
+    },
+    {
+      "include": "#functions"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.cez",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.cez",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.cez",
+              "match": "\\\\\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.cez",
+          "begin": "'",
+          "end": "'"
+        }
+      ]
+    },
+    "keywords": {
+      "name": "keyword.control.cez",
+      "match": "\\b(clase|funcion|retornar|si|sino|sino_si|mientras|para|en|romper|continuar|y|o|no|es)\\b"
+    },
+    "constants": {
+      "name": "constant.language.cez",
+      "match": "\\b(verdadero|falso|nada|yo)\\b"
+    },
+    "functions": {
+      "name": "support.function.cez",
+      "match": "\\b(mostrar|entrada|tipo|rango|longitud)\\b"
+    }
+  }
+}
