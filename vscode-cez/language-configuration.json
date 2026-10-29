@@ -1,44 +1,14 @@
 {
-  "comments": {
-    "lineComment": "#"
-  },
-  "brackets": [
-    [
-      "(",
-      ")"
-    ],
-    [
-      "[",
-      "]"
-    ],
-    [
-      "{",
-      "}"
-    ]
-  ],
+  "comments": { "lineComment": "#" },
+  "brackets": [["(", ")"], ["[", "]"], ["{", "}"]],
   "autoClosingPairs": [
-    {
-      "open": "(",
-      "close": ")"
-    },
-    {
-      "open": "[",
-      "close": "]"
-    },
-    {
-      "open": "{",
-      "close": "}"
-    },
-    {
-      "open": "\"",
-      "close": "\""
-    },
-    {
-      "open": "'",
-      "close": "'"
-    }
+    { "open": "(", "close": ")" },
+    { "open": "[", "close": "]" },
+    { "open": "{", "close": "}" },
+    { "open": "\" ", "close": "\" " },
+    { "open": "'", "close": "'" }
   ],
   "indentationRules": {
-    "increaseIndentPattern": "^\\s*(clase|funcion|si|sino|sino_si|mientras|para)\\b.*:\\s*$"
+    "increaseIndentPattern": "^\\s*(class|function|if|else if|else|elseif|while|for|clase|funcion|si|sino|sino_si|mientras|para)\\b.*:\\s*$"
   }
 }
