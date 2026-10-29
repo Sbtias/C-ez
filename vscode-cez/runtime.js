@@ -10,6 +10,7 @@ function compile(source) {
     .replace(/\band\b/g, '&&').replace(/\bor\b/g, '||')
     .replace(/\bnot\s+is\b/g, '!==').replace(/\bis\b/g, '===')
     .replace(/\bnot\s+/g, '!').replace(/\bmostrar\s*\(/g, 'Console.WriteLine(')
+    .replace(/\b(?:say|print)\s*\(/g, 'Console.WriteLine(')
     .replace(/\bconsola\.escribir\b/g, 'Console.WriteLine')
     .replace(/\bconsola\.advertir\b/g, 'Console.WriteWarning')
     .replace(/\bconsola\.error\b/g, 'Console.WriteError')
@@ -47,7 +48,7 @@ function compile(source) {
       continue;
     }
 
-    const fn = code.match(/^(?:(?:void|int|string|double|bool|static)\s+)*(?:funcion|function|fn)\s+([A-Za-z_$][\w$]*)\s*\((.*?)\)\s*:?$/)
+    const fn = code.match(/^(?:(?:void|int|string|double|bool|static)\s+)*(?:funcion|function|func|fn)\s+([A-Za-z_$][\w$]*)\s*\((.*?)\)\s*:?$/)
       || code.match(/^(?:void|int|string|double|bool)\s+([A-Za-z_$][\w$]*)\s*\((.*?)\)\s*:?$/);
     if (fn) {
       const isMethod = stack.some(item => item.type === 'class') && indent > (inClassIndent ?? -1);
@@ -73,7 +74,7 @@ function compile(source) {
       out.push(pad + 'while (' + expression(code.replace(/^(?:while|mientras)\s+/, '').replace(/:\s*$/, '')) + ') {');
       stack.push({ indent, type: 'block' }); continue;
     }
-    if (/^(?:for|para)\s+\w+\s+(?:in|en)\s+.+:$/.test(code)) {
+    if (/^repeat\s+.+\s+times:$/.test(code)) {\n      const count = code.match(/^repeat\s+(.+)\s+times:$/)[1];\n      out.push(pad + 'for (let __cez_i = 0; __cez_i < (' + expression(count) + '); __cez_i++) {');\n      stack.push({ indent, type: 'block' }); continue;\n    }\n    if (/^(?:for|para)\s+\w+\s+(?:in|en)\s+.+:$/.test(code)) {
       const match = code.match(/^(?:for|para)\s+(\w+)\s+(?:in|en)\s+(.+):$/);
       out.push(pad + 'for (const ' + match[1] + ' of ' + expression(match[2]) + ') {');
       stack.push({ indent, type: 'block' }); continue;
