@@ -51,7 +51,8 @@ function activate(context) {
     diagnostics.delete(document.uri);
     output.appendLine('C ez • Ejecutando ' + path.basename(document.fileName));
     try {
-      const source = await expandImports(document.getText(), document.fileName);\n      const result = run(source, document.fileName);
+      const source = await expandImports(document.getText(), document.fileName);
+      const result = run(source, document.fileName);
       if (result.output) output.appendLine(result.output);
       else output.appendLine('(sin salida)');
       output.appendLine('');
