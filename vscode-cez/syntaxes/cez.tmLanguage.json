@@ -15,6 +15,12 @@
     },
     {
       "include": "#functions"
+    },
+    {
+      "include": "#console"
+    },
+    {
+      "include": "#declarations"
     }
   ],
   "repository": {
@@ -48,7 +54,7 @@
     },
     "keywords": {
       "name": "keyword.control.cez",
-      "match": "\\b(clase|class|funcion|function|retornar|return|si|sino|sino_si|mientras|para|en|romper|continuar|y|o|no|es)\\b"
+      "match": "\\\\b(clase|class|funcion|function|retornar|return|si|sino|sino_si|mientras|para|en|romper|continuar|y|o|no|es)\\\\b"
     },
     "constants": {
       "name": "constant.language.cez",
@@ -56,7 +62,35 @@
     },
     "functions": {
       "name": "support.function.cez",
-      "match": "\\b(mostrar|entrada|tipo|rango|longitud|main)\\b"
+      "match": "\\\\b(mostrar|entrada|tipo|rango|longitud|main)\\\\b"
+    },
+    "console": {
+      "patterns": [
+        {
+          "name": "support.type.cez",
+          "match": "\\\\b(consola|console)\\\\b"
+        },
+        {
+          "name": "support.function.cez",
+          "match": "\\\\b(escribir|log|error|advertir|warn|limpiar)\\\\b"
+        }
+      ]
+    },
+    "declarations": {
+      "patterns": [
+        {
+          "name": "entity.name.function.cez",
+          "match": "(?<=funcion )\\\\w+"
+        },
+        {
+          "name": "entity.name.function.cez",
+          "match": "(?<=function )\\\\w+"
+        },
+        {
+          "name": "entity.name.class.cez",
+          "match": "(?<=clase )\\\\w+"
+        }
+      ]
     }
   }
 }
