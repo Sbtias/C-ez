@@ -68,9 +68,10 @@ function activate(context) {
       const match = message.match(/línea\s+(\d+)/i);
       if (match) {
         const line = Math.max(0, Number(match[1]) - 1);
-        const range = new vscode.Range(line, 0, line, Math.max(1, document.lineAt(line).text.length));
+        const safeLine = Math.min(line, document.lineCount - 1);
+        const range = new vscode.Range(safeLine, 0, safeLine, Math.max(1, document.lineAt(safeLine).text.length));
         diagnostics.set(document.uri, [new vscode.Diagnostic(range, message.split('\n')[0], vscode.DiagnosticSeverity.Error)]);
-        const position = new vscode.Position(line, 0);
+        const position = new vscode.Position(safeLine, 0);
         editor.selection = new vscode.Selection(position, position);
         editor.revealRange(range, vscode.TextEditorRevealType.InCenter);
       }
@@ -97,9 +98,10 @@ function activate(context) {
 
         const keywords = [
           ['clase', 'Define una clase', 'clase ${1:Nombre}:\n    ${0}'],
-          ['funcion', 'Define una función', 'funcion ${1:nombre}(${2}):\n    ${0:retornar nada}'],
+          ['funcion', 'Palabra clave para declarar una función'],
+          ['function', 'Alias en inglés de funcion'],
           ['iniciar', 'Constructor de una clase', 'funcion iniciar(${1}):\n    ${0}'],
-          ['main', 'Punto de entrada ejecutado automáticamente', 'funcion main():\n    ${0}'],
+          ['main', 'Nombre de la función principal'],
           ['retornar', 'Devuelve un valor desde una función'],
           ['si', 'Condición', 'si ${1:condicion}:\n    ${0}'],
           ['sino_si', 'Condición alternativa', 'sino_si ${1:condicion}:\n    ${0}'],
@@ -165,7 +167,7 @@ function activate(context) {
         const source = document.getText();
         const seen = new Set();
         const patterns = [
-          { regex: /^\s*(?:funcion|clase)\s+([A-Za-z_$][\w$]*)/gm, kind: vscode.CompletionItemKind.Function, detail: 'Declaración de C ez' },
+          { regex: /^\s*(?:funcion|function|clase|class)\s+([A-Za-z_$][\w$]*)/gm, kind: vscode.CompletionItemKind.Function, detail: 'Declaración de C ez' },
           { regex: /^\s*([A-Za-z_$][\w$]*)\s*=/gm, kind: vscode.CompletionItemKind.Variable, detail: 'Variable del archivo' },
           { regex: /^\s*(?:para)\s+([A-Za-z_$][\w$]*)\s+en\b/gm, kind: vscode.CompletionItemKind.Variable, detail: 'Variable de bucle' }
         ];
