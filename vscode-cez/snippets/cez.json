@@ -35,5 +35,27 @@
       "    ${3:mostrar(\"no\")}"
     ],
     "description": "Condicional si/sino"
+  },
+  "Programa principal (main)": {
+    "prefix": "main",
+    "body": [
+      "funcion main():",
+      "    ${1:consola.escribir(\"Hola, mundo!\")}"
+    ],
+    "description": "Punto de entrada que C ez ejecuta automáticamente"
+  },
+  "Consola: escribir": {
+    "prefix": "escribir",
+    "body": [
+      "consola.escribir(${1:valor})"
+    ],
+    "description": "Escribe un valor en la salida de C ez"
+  },
+  "Importar módulo": {
+    "prefix": "importar",
+    "body": [
+      "/importar \"${1:utilidades.cez}\""
+    ],
+    "description": "Incluye otro archivo C ez desde la misma carpeta"
   }
 }
