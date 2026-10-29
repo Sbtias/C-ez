@@ -132,8 +132,8 @@ function activate(context) {
           ['limpiar', 'Limpia la salida de la ejecución', 'limpiar()']
         ];
         const linePrefix = document.lineAt(position).text.slice(0, position.character);
-        const inConsole = /\\b(?:consola|console)\\.\\w*$/.test(linePrefix);
-        const inImport = /^\\s*\\/importar\\s+[^"']*$/.test(linePrefix);
+        const inConsole = linePrefix.includes('consola.') || linePrefix.includes('console.');
+        const inImport = linePrefix.trimStart().startsWith('/importar ');
         for (const [label, description, snippet] of consoleMethods) {
           const item = new vscode.CompletionItem(label, vscode.CompletionItemKind.Function);
           item.detail = 'C ez · método de consola';
