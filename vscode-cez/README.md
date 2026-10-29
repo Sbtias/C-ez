@@ -1,68 +1,59 @@
-# C ez Language Support · v0.4.1
+# C ez Language Support · v0.5.0
 
 <p align="center"><strong>C EZ · LANGUAGE SUPPORT</strong></p>
 
-**Versión de la extensión: `0.4.1`**
+**Extension version: 0.5.0**
 
-Extensión de VS Code para archivos `.cez`, con intérprete integrado, autocompletado, consola y módulos.
+VS Code support for .cez files, with syntax highlighting, autocomplete, an integrated runtime, console output, and built-in library modules.
 
-## Instalar
+## Install
 
-Descarga el artefacto `cez-language-vsix` desde la ejecución más reciente de GitHub Actions en https://github.com/Sbtias/C-ez/actions. En VS Code, usa **Extensiones → ... → Instalar desde VSIX...**.
+Download the cez-language-vsix artifact from the latest GitHub Actions run: https://github.com/Sbtias/C-ez/actions. In VS Code, choose Extensions → ... → Install from VSIX....
 
-## Ejecutar y punto de entrada
+## Run a program
 
-Abre un archivo `.cez` y pulsa **Ctrl+F5** en Windows/Linux o **Cmd+F5** en macOS. La salida y los errores aparecen en el canal de salida **C ez**.
+Open a .cez file and press Ctrl+F5 on Windows/Linux or Cmd+F5 on macOS. Output and errors appear in the C ez Output channel.
 
-La función `main()` es el punto de entrada. Si existe, C ez la ejecuta automáticamente:
-
-```cez
-funcion main():
-    consola.escribir("Hola, mundo!")
-    consola.advertir("Esto es una advertencia")
-```
-
-No hace falta escribir `main()` al final del archivo.
-
-## Consola
-
-- `consola.escribir(valor)`: muestra texto o valores.
-- `consola.error(mensaje)`: muestra un mensaje marcado como error en la salida.
-- `consola.advertir(mensaje)`: muestra una advertencia.
-- `consola.limpiar()`: limpia la salida generada hasta ese momento.
-
-También se mantiene `mostrar(valor)` como atajo de compatibilidad.
-
-## Importar otros archivos
-
-Usa `/importar` en una línea propia. La ruta es relativa al archivo que hace la importación; la extensión `.cez` es opcional.
-
-Archivo `main.cez`:
+The main() function runs automatically when present:
 
 ```cez
-/importar "utilidades.cez"
+using System;
 
-funcion main():
-    saludar("mundo")
+function main():
+    Console.WriteLine("Hello, world!")
+    Console.WriteWarning("This is a warning")
 ```
 
-Archivo `utilidades.cez`:
+## Built-in libraries
+
+Use C#-style using directives to make module dependencies clear. No package download is needed.
+
+- using System; provides Console.WriteLine(), Console.WriteWarning(), and Console.WriteError().
+- using Random; provides Random.Next(min, max), Random.Float(), and Random.Choice(array).
+- using Text; provides Text.ToUpper(), Text.ToLower(), Text.Trim(), Text.Contains(), Text.Replace(), and Text.Split().
+- using Dates; provides Dates.Now(), Dates.Year(), Dates.Month(), Dates.Day(), and Dates.Timestamp().
+- using Collections; provides Collections.Count(), Collections.Add(), Collections.Remove(), Collections.Contains(), and Collections.Sort().
+- using Json; provides Json.Stringify() and Json.Parse().
+
+## Syntax
+
+C ez borrows selected ideas from C#, including using, class and access modifiers, familiar type names, and Console.WriteLine(). Blocks remain indentation-based and begin with a colon. Semicolons are optional. C# braces-based syntax is not supported.
+
+English keywords are preferred: class, function, return, if, else if, else, while, for item in items, true, false, null, and, or, and not. Previous Spanish keywords remain supported.
+
+## Import project files
+
+Use /import "utilities.cez" on its own line to include another local C ez file. The path is relative to the importing file, and the extension is optional.
 
 ```cez
-funcion saludar(nombre):
-    consola.escribir("Hola, " + nombre)
+/import "utilities.cez"
+
+function main():
+    greet("world")
 ```
 
-Se detectan importaciones circulares y se muestra un error si falta un archivo importado.
+## File icons and autocomplete
 
-## Autocompletado e icono
+The extension includes the C ez File Icons theme for .cez files. Enable it through Preferences: File Icon Theme → C ez File Icons. Press Ctrl+Space to show completions.
 
-El autocompletado sugiere palabras clave sin insertar una función completa al elegir `funcion` o `function`. Usa `funcionfn` para insertar la plantilla de una función. También ofrece métodos de consola y `/importar`. Si no aparece, pulsa **Ctrl+Espacio**.
-
-La extensión incluye un tema de iconos llamado **C ez File Icons** para mostrar un logo en archivos `.cez`. Para activarlo, abre la paleta de comandos y elige **Preferences: File Icon Theme → C ez File Icons**.
-
-## Funciones disponibles
-
-Incluye variables, funciones, clases, condiciones, bucles, listas/objetos y utilidades básicas como `longitud()`, `rango()`, `texto()`, `numero()` y `tipo()`. No requiere Python ni dependencias externas en tiempo de ejecución.
-
-C ez sigue en desarrollo y solo implementa el subconjunto documentado.
+C ez is under active development and implements a documented subset of a programming language, not full C# compatibility.
