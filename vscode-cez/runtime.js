@@ -74,10 +74,6 @@ function compile(source) {
       out.push(pad + 'while (' + expression(code.replace(/^(?:while|mientras)\s+/, '').replace(/:\s*$/, '')) + ') {');
       stack.push({ indent, type: 'block' }); continue;
     }
-      const count = code.match(/^repeat\s+(.+)\s+times:$/)[1];
-      out.push(pad + 'for (let __cez_i = 0; __cez_i < (' + expression(count) + '); __cez_i++) {');
-      stack.push({ indent, type: 'block' }); continue;
-    }
     if (/^repeat\s+.+\s+times:$/.test(code)) {
       const count = code.match(/^repeat\s+(.+)\s+times:$/)[1];
       out.push(pad + 'for (let __cez_i = 0; __cez_i < (' + expression(count) + '); __cez_i++) {');
