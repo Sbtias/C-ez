@@ -83,7 +83,7 @@ function compile(source) {
       .replace(/^(?:break|romper)\b/, 'break')
       .replace(/^(?:continue|continuar)\b/, 'continue');
     code = expression(code);
-    if (/^(?:if|else|elseif|while|for|class|funcion|function|fn|si|sino|sino_si|mientras|para)\b/.test(code)) {
+    if (/^(?:if|else|elseif|while|for|repeat|class|funcion|function|func|fn|si|sino|sino_si|mientras|para)\b/.test(code)) {
       throw new Error('Syntax error on line ' + (index + 1) + ': incomplete or unrecognized statement: ' + trimmed + '. Check parentheses, colons, and indentation.');
     }
     out.push(pad + code + ';');
@@ -101,7 +101,7 @@ function createLibraries(write) {
       WriteWarning: (...args) => write('WARNING:', ...args),
       Clear: () => write('[Console.Clear called]')
     },
-    System: { Name: 'C ez', Version: '0.5.0' },
+    System: { Name: 'C ez', Version: '0.6.0' },
     Random: {
       Next(min = 0, max = 1) { return Math.floor(Math.random() * (max - min)) + min; },
       Float() { return Math.random(); },
