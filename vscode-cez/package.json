@@ -1,0 +1,73 @@
+{
+  "name": "cez-language",
+  "displayName": "C ez Language Support",
+  "description": "Resaltado, snippets y ejecución para archivos .cez.",
+  "version": "0.1.0",
+  "publisher": "sbtias",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:cez"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "cez",
+        "aliases": [
+          "C ez",
+          "cez"
+        ],
+        "extensions": [
+          ".cez"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "cez",
+        "scopeName": "source.cez",
+        "path": "./syntaxes/cez.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "cez.runFile",
+        "title": "C ez: Ejecutar archivo"
+      },
+      {
+        "command": "cez.newFile",
+        "title": "C ez: Crear archivo .cez"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "cez.runFile",
+        "key": "ctrl+f5",
+        "mac": "cmd+f5",
+        "when": "editorTextFocus && editorLangId == cez"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "cez",
+        "path": "./snippets/cez.json"
+      }
+    ],
+    "configuration": {
+      "title": "C ez",
+      "properties": {
+        "cez.pythonPath": {
+          "type": "string",
+          "default": "py -3",
+          "description": "Comando Python para ejecutar C ez en Windows; usa python3 en macOS/Linux."
+        }
+      }
+    }
+  }
+}
