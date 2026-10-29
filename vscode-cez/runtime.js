@@ -48,7 +48,7 @@ function compile(source) {
       continue;
     }
 
-    const fn = code.match(/^funcion\s+([A-Za-z_$][\w$]*)\s*\((.*?)\)\s*:\s*$/);
+    const fn = code.match(/^(?:funcion|function)\s+([A-Za-z_$][\w$]*)\s*\((.*?)\)\s*:\s*$/);
     if (fn) {
       const isMethod = stack.some(item => item.type === 'class') && indent > (inClassIndent ?? -1);
       const name = fn[1] === 'iniciar' ? 'constructor' : fn[1];
@@ -117,7 +117,7 @@ function run(source, filename = 'main.cez') {
     try { return JSON.stringify(value); } catch (_) { return String(value); }
   }).join(' '));
   const sandbox = {
-    console: { log: write, error: (...args) => write('ERROR:', ...args), warn: (...args) => write('AVISO:', ...args) },
+    console: { escribir: write, log: write, error: (...args) => write('ERROR:', ...args), warn: (...args) => write('AVISO:', ...args), advertir: (...args) => write('AVISO:', ...args), limpiar: () => { output.length = 0; } },
     consola: {
       escribir: write,
       log: write,
