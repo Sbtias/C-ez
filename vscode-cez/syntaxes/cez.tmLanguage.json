@@ -1,95 +1,49 @@
 {
   "scopeName": "source.cez",
   "patterns": [
-    {
-      "include": "#comments"
-    },
-    {
-      "include": "#strings"
-    },
-    {
-      "include": "#keywords"
-    },
-    {
-      "include": "#constants"
-    },
-    {
-      "include": "#functions"
-    },
-    {
-      "include": "#console"
-    },
-    {
-      "include": "#declarations"
-    }
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#using" },
+    { "include": "#keywords" },
+    { "include": "#constants" },
+    { "include": "#functions" },
+    { "include": "#libraries" },
+    { "include": "#console" },
+    { "include": "#declarations" }
   ],
   "repository": {
     "comments": {
       "patterns": [
-        {
-          "name": "comment.line.number-sign.cez",
-          "match": "#.*$"
-        }
+        { "name": "comment.line.number-sign.cez", "match": "#.*$" },
+        { "name": "comment.line.double-slash.cez", "match": "//.*$" }
       ]
     },
     "strings": {
       "patterns": [
-        {
-          "name": "string.quoted.double.cez",
-          "begin": "\"",
-          "end": "\"",
-          "patterns": [
-            {
-              "name": "constant.character.escape.cez",
-              "match": "\\\\\\\\."
-            }
-          ]
-        },
-        {
-          "name": "string.quoted.single.cez",
-          "begin": "'",
-          "end": "'"
-        }
+        { "name": "string.quoted.double.cez", "begin": "\"","end": "\"","patterns": [{ "name": "constant.character.escape.cez", "match": "\\\\." }] },
+        { "name": "string.quoted.single.cez", "begin": "'", "end": "'" }
       ]
     },
+    "using": { "name": "keyword.control.import.cez", "match": "\\b(using)\\b|^\\s*/import(?:ar)?\\b" },
     "keywords": {
       "name": "keyword.control.cez",
-      "match": "\\b(clase|class|funcion|function|retornar|return|si|sino|sino_si|mientras|para|en|romper|continuar|y|o|no|es)\\b"
+      "match": "\\b(class|function|fn|return|if|else|elseif|else_if|while|for|in|break|continue|and|or|not|is|public|private|protected|static|void|int|double|float|string|bool|var|let|const|clase|funcion|retornar|si|sino|sino_si|mientras|para|en|romper|continuar|y|o|no|es)\\b"
     },
-    "constants": {
-      "name": "constant.language.cez",
-      "match": "\\b(verdadero|falso|nada|yo)\\b"
-    },
-    "functions": {
-      "name": "support.function.cez",
-      "match": "\\b(mostrar|entrada|tipo|rango|longitud|main)\\b"
-    },
+    "constants": { "name": "constant.language.cez", "match": "\\b(true|false|null|this|verdadero|falso|nada|yo)\\b" },
+    "functions": { "name": "support.function.cez", "match": "\\b(main|length|range|mostrar|longitud|rango|texto|numero|tipo)\\b" },
+    "libraries": { "name": "support.type.cez", "match": "\\b(System|Random|Text|Dates|Collections|Json|Cez)\\b" },
     "console": {
       "patterns": [
-        {
-          "name": "support.type.cez",
-          "match": "\\b(consola|console)\\b"
-        },
-        {
-          "name": "support.function.cez",
-          "match": "\\b(escribir|log|error|advertir|warn|limpiar)\\b"
-        }
+        { "name": "support.type.cez", "match": "\\b(Console|console|consola)\\b" },
+        { "name": "support.function.cez", "match": "\\b(WriteLine|WriteError|WriteWarning|Clear|escribir|log|error|advertir|warn|limpiar)\\b" }
       ]
     },
     "declarations": {
       "patterns": [
-        {
-          "name": "entity.name.function.cez",
-          "match": "(?<=funcion )\\w+"
-        },
-        {
-          "name": "entity.name.function.cez",
-          "match": "(?<=function )\\w+"
-        },
-        {
-          "name": "entity.name.class.cez",
-          "match": "(?<=clase )\\w+"
-        }
+        { "name": "entity.name.function.cez", "match": "(?<=function )\\w+" },
+        { "name": "entity.name.function.cez", "match": "(?<=funcion )\\w+" },
+        { "name": "entity.name.class.cez", "match": "(?<=class )\\w+" },
+        { "name": "entity.name.class.cez", "match": "(?<=clase )\\w+" }
       ]
     }
   }
