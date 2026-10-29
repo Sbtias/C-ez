@@ -1,59 +1,47 @@
-# C ez Language Support · v0.5.0
+# C ez Language Support · v0.6.0
 
-<p align="center"><strong>C EZ · LANGUAGE SUPPORT</strong></p>
+**A small, readable language with a few C#-inspired ideas.**
 
-**Extension version: 0.5.0**
+C ez uses indentation and short commands instead of requiring C#-style braces and semicolons.
 
-VS Code support for .cez files, with syntax highlighting, autocomplete, an integrated runtime, console output, and built-in library modules.
-
-## Install
-
-Download the cez-language-vsix artifact from the latest GitHub Actions run: https://github.com/Sbtias/C-ez/actions. In VS Code, choose Extensions → ... → Install from VSIX....
-
-## Run a program
-
-Open a .cez file and press Ctrl+F5 on Windows/Linux or Cmd+F5 on macOS. Output and errors appear in the C ez Output channel.
-
-The main() function runs automatically when present:
+## Quick start
 
 ```cez
 using System;
 
-function main():
-    Console.WriteLine("Hello, world!")
-    Console.WriteWarning("This is a warning")
+func main():
+    say("Hello, world!")
+
+    repeat 3 times:
+        say("Easy to read. Easy to build.")
 ```
+
+Open a `.cez` file and press **Ctrl+F5** on Windows/Linux or **Cmd+F5** on macOS. Output appears in the **C ez** Output channel.
+
+## Simple syntax
+
+- `func name():` declares a function. `function` is an accepted alias.
+- `say(value)` and `print(value)` display output.
+- `if condition:`, `else:`, `while condition:`, and `for item in items:` control program flow.
+- `repeat 5 times:` repeats a block five times.
+- Colons and indentation define blocks. Semicolons are optional.
+- Classes are available when you need them, but are not required for small programs.
 
 ## Built-in libraries
 
-Use C#-style using directives to make module dependencies clear. No package download is needed.
+Use `using LibraryName;` to document a dependency on a built-in module:
 
-- using System; provides Console.WriteLine(), Console.WriteWarning(), and Console.WriteError().
-- using Random; provides Random.Next(min, max), Random.Float(), and Random.Choice(array).
-- using Text; provides Text.ToUpper(), Text.ToLower(), Text.Trim(), Text.Contains(), Text.Replace(), and Text.Split().
-- using Dates; provides Dates.Now(), Dates.Year(), Dates.Month(), Dates.Day(), and Dates.Timestamp().
-- using Collections; provides Collections.Count(), Collections.Add(), Collections.Remove(), Collections.Contains(), and Collections.Sort().
-- using Json; provides Json.Stringify() and Json.Parse().
+- `System`: console helpers, including `Console.WriteLine()`.
+- `Random`: `Random.Next(min, max)`, `Random.Float()`, `Random.Choice(items)`.
+- `Text`: `Text.ToUpper()`, `Text.ToLower()`, `Text.Trim()`, `Text.Contains()`, `Text.Replace()`, `Text.Split()`.
+- `Dates`: `Dates.Now()`, `Dates.Year()`, `Dates.Month()`, `Dates.Day()`, `Dates.Timestamp()`.
+- `Collections`: `Collections.Count()`, `Collections.Add()`, `Collections.Remove()`, `Collections.Contains()`, `Collections.Sort()`.
+- `Json`: `Json.Stringify()`, `Json.Parse()`.
 
-## Syntax
+These libraries ship with the runtime; no package manager or internet download is required. The `using` directive currently documents imports, while built-in modules are available in the runtime.
 
-C ez borrows selected ideas from C#, including using, class and access modifiers, familiar type names, and Console.WriteLine(). Blocks remain indentation-based and begin with a colon. Semicolons are optional. C# braces-based syntax is not supported.
+## Install
 
-English keywords are preferred: class, function, return, if, else if, else, while, for item in items, true, false, null, and, or, and not. Previous Spanish keywords remain supported.
+Download the `cez-language-vsix` artifact from [GitHub Actions](https://github.com/Sbtias/C-ez/actions), then in VS Code choose **Extensions → ... → Install from VSIX...**.
 
-## Import project files
-
-Use /import "utilities.cez" on its own line to include another local C ez file. The path is relative to the importing file, and the extension is optional.
-
-```cez
-/import "utilities.cez"
-
-function main():
-    greet("world")
-```
-
-## File icons and autocomplete
-
-The extension includes the C ez File Icons theme for .cez files. Enable it through Preferences: File Icon Theme → C ez File Icons. Press Ctrl+Space to show completions.
-
-C ez is under active development and implements a documented subset of a programming language, not full C# compatibility.
+C ez is under development and is not a full C# compiler.
