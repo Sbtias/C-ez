@@ -135,7 +135,7 @@ function activate(context) {
         return items;
       }
     },
-    '.', '('
+    ...'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_'.split(''), '.', '('
   );
   context.subscriptions.push(completionProvider);
 
